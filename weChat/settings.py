@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.9/ref/settings/
 """
 
+import socket
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -23,9 +24,17 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'e0%1a@@qc6#k_e80js78k75oknv0!3!+nn30^7+x265o*1_yil'
 
 # SECURITY WARNING: don't run with debug turned on in production!
+#Jax
 DEBUG = True
+#if socket.gethostname() == 'Lenovo':
+#    DEBUG = False
+#else:
+#    DEBUG = True
+#ADMINS = [
+#        'Jax Wang', '451478064@qq.com',
+#        ]
 
-ALLOWED_HOSTS = []
+#ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -37,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'echo',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -55,7 +65,7 @@ ROOT_URLCONF = 'weChat.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR + '/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
