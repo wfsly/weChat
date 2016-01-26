@@ -1,6 +1,5 @@
 # weChat
 微信公众平台开发练习
-
 this project use Django-1.9
 
 
