@@ -1,10 +1,12 @@
 # weChat
 微信公众平台开发练习
+
 this project use Django-1.9
 
 
 # django
-# 使用ngrok本地测试开发
+使用ngrok本地测试开发
+
 you can get ngrok [here][ngrok].
 
 # setup
