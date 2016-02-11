@@ -19,22 +19,19 @@ def index(request):
         print xml
 
         data = utils.parse_xml(xml)
+        utils.exchange_src_des(data)
         
         if data['MsgType'] == 'text':
-            data['Content'] = u"家政保洁欢迎您"
-            data['FromUserName'], data['ToUserName'] = data['ToUserName'], data['FromUserName']
+            data['Content'] = u"一诺保洁欢迎您!"
             response = utils.generate_response(data)
-            #response = user_msg
-            #response.find('ToUserName').text = data['FromUserName']
-            #response.find('FromUserName').text = data['ToUserName']
-            #response.find('Content').text = data['Content']
-            #response.find('CreateTime').text = time.time()
-            #to = "<ToUserName><![CDATA[%s]]></ToUserName>" % data['FromUserName']
-            #server = "<FromUserName><![CDATA[%s]]></FromUserName>" % data['ToUserName']
-            #respon_msg = "<Content><![CDATA[%s]]></Content>" % (data['Content'] + 'fucking asshole')
-            #msg_type = "<MsgType><![CDATA[%s]]></MsgType>" % data['MsgType']
-            #create_time = "<CreateTime><![CDATA[%s]]></CreateTime>" % str(int(time.time()))
-            #response = '<xml>' + to + server + create_time + msg_type + respon_msg + '</xml>'
+            rsp_dict = {'to_user_name': data['ToUserName'],
+                        'to_from_name': data['FromUserName'],
+                        'create_time': time.time(),
+                        'msg_type': data['MsgType'],
+                        'content': data['Content']
+                        }
+
+            return render(request, "response/reply_text.xml", rsp_dict, content_type = "application/xml")
 
             return HttpResponse(response, content_type='text/xml')
 
