@@ -16,13 +16,31 @@ import utils
 def index(request):
     if request.method == 'POST':
         xml = request.body
-        print xml
 
         data = utils.parse_xml(xml)
         utils.exchange_src_des(data)
         
-        if data['MsgType'] == 'text':
-            data['Content'] = u"一诺保洁欢迎您!"
+        if data['MsgType'] == 'event':
+            response = """ <xml>
+             <ToUserName><![CDATA[oya85xGKN27mNeSoLLZ7fFfqD_xs]]></ToUserName>
+              <FromUserName><![CDATA[gh_da5a46195092]]></FromUserName> 
+               <CreateTime>1348831860</CreateTime>
+                <MsgType><![CDATA[text]]></MsgType>
+                 <Content><![CDATA[一诺保洁]]></Content>
+                  <MsgId>1234567890123456</MsgId>
+                   </xml>"""
+            return HttpResponse(response, content_type="application/xml")
+
+            data['Content'] = u"一诺保洁欢迎您^_^"
+            rsp_dict = {'to_user_name': data['ToUserName'],
+                        'to_from_name': data['FromUserName'],
+                        'create_time': time.time(),
+                        'msg_type': data['MsgType'],
+                        'content': data['Content']
+                        }
+            return render(request, "response/reply_subscribe_event.xml", rsp_dict, content_type="application/xml")
+        elif data['MsgType'] == 'text':
+            data['Content'] = u"一诺保洁欢迎您"
             rsp_dict = {'to_user_name': data['ToUserName'],
                         'to_from_name': data['FromUserName'],
                         'create_time': time.time(),
@@ -42,6 +60,4 @@ def index(request):
                         }
             return render(request, "response/reply_image.xml", rsp_dict, content_type = "application/xml")
 
-
-    #return render(request, "index.html", {})
     return HttpResponse()
