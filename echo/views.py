@@ -23,7 +23,6 @@ def index(request):
         
         if data['MsgType'] == 'text':
             data['Content'] = u"一诺保洁欢迎您!"
-            response = utils.generate_response(data)
             rsp_dict = {'to_user_name': data['ToUserName'],
                         'to_from_name': data['FromUserName'],
                         'create_time': time.time(),
@@ -33,18 +32,15 @@ def index(request):
 
             return render(request, "response/reply_text.xml", rsp_dict, content_type = "application/xml")
 
-            return HttpResponse(response, content_type='text/xml')
 
-        if data['MsgType'] == 'image':
-            to = "<ToUserName><![CDATA[%s]]></ToUserName>" % data['FromUserName']
-            server = "<FromUserName><![CDATA[%s]]></FromUserName>" % data['ToUserName']
-            #pic_url = "<PicUrl><![CDATA[%s]]></PicUrl>" % data['PicUrl']
-            msg_type = "<MsgType><![CDATA[%s]]></MsgType>" % data['MsgType']
-            create_time = "<CreateTime><![CDATA[%s]]></CreateTime>" % str(int(time.time()))
-            media_id = "<Image><MediaId><![CDATA[%s]]></MediaId></Image>" % data['MediaId']
-            response = '<xml>' + to + server + create_time + msg_type + media_id + '</xml>'
-            print response
-            return HttpResponse(response, content_type="application/xml")
+        elif data['MsgType'] == 'image':
+            rsp_dict = {'to_user_name': data['ToUserName'],
+                        'to_from_name': data['FromUserName'],
+                        'create_time': time.time(),
+                        'msg_type': data['MsgType'],
+                        'media_id': data['MediaId']
+                        }
+            return render(request, "response/reply_image.xml", rsp_dict, content_type = "application/xml")
 
 
     #return render(request, "index.html", {})
