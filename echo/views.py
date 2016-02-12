@@ -21,24 +21,16 @@ def index(request):
         utils.exchange_src_des(data)
         
         if data['MsgType'] == 'event':
-            response = """ <xml>
-             <ToUserName><![CDATA[oya85xGKN27mNeSoLLZ7fFfqD_xs]]></ToUserName>
-              <FromUserName><![CDATA[gh_da5a46195092]]></FromUserName> 
-               <CreateTime>1348831860</CreateTime>
-                <MsgType><![CDATA[text]]></MsgType>
-                 <Content><![CDATA[一诺保洁]]></Content>
-                  <MsgId>1234567890123456</MsgId>
-                   </xml>"""
+            if data['Event'] == 'subscribe':
+                response = """ <xml>
+                <ToUserName><![CDATA[%s]]></ToUserName>
+                <FromUserName><![CDATA[%s]]></FromUserName> 
+                <CreateTime>%s</CreateTime>
+                <MsgType><![CDATA[%s]]></MsgType>
+                <Content><![CDATA[%s]]></Content>
+                </xml>""" % (data['ToUserName'], data['FromUserName'], str(int(time.time())), 'text', u"一诺保洁，真诚服务")
             return HttpResponse(response, content_type="application/xml")
 
-            data['Content'] = u"一诺保洁欢迎您^_^"
-            rsp_dict = {'to_user_name': data['ToUserName'],
-                        'to_from_name': data['FromUserName'],
-                        'create_time': time.time(),
-                        'msg_type': data['MsgType'],
-                        'content': data['Content']
-                        }
-            return render(request, "response/reply_subscribe_event.xml", rsp_dict, content_type="application/xml")
         elif data['MsgType'] == 'text':
             data['Content'] = u"一诺保洁欢迎您"
             rsp_dict = {'to_user_name': data['ToUserName'],
@@ -60,4 +52,4 @@ def index(request):
                         }
             return render(request, "response/reply_image.xml", rsp_dict, content_type = "application/xml")
 
-    return HttpResponse()
+    #return HttpResponse()
