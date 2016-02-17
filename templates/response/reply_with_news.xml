@@ -1,0 +1,26 @@
+<!-- [CDATA[这里开头和结束不能有空格]]
+     eg.[CDATA[ {{ to_user_name }} ]] 是错误的
+-->
+<xml>
+    <ToUserName> <![CDATA[{{ to_user_name }}]]> </ToUserName>
+    <FromUserName> <![CDATA[{{ from_user_name }}]]> </FromUserName>
+    <CreateTime> {{ create_time }} </CreateTime>
+    <MsgType> <![CDATA[{{ msg_type }}]]> </MsgType>
+    <ArticleCount> {{ article_count }} </ArticleCount>
+    <Articles>
+        <item>
+            <Title>
+                <![CDATA[{{ title1 }}]]>
+            </Title>
+            <Description>
+                <![CDATA[{{ description1 }}]]>
+            </Description>
+            <PicUrl>
+                <![CDATA[ {{ pic_url }}]]>
+            </PicUrl>
+            <Url>
+                <![CDATA[ {{ url }}]]>
+            </Url>
+        </item>
+    </Articles>
+</xml>

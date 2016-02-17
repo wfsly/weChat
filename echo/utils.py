@@ -1,6 +1,6 @@
 from xml.etree import ElementTree as ET
 
-#parse msg of weChat into dict{}
+#parse message of weChat into dict{}
 def parse_xml(data):
     result = {}
 
@@ -20,7 +20,10 @@ def parse_xml(data):
 def generate_response(data):
     xml = ["<xml>"]
     for key in data:
-        xml.append("<{0}>{1}</{0}>".format(key.encode("utf-8"), data[key].encode("utf-8")))
+        xml.append("<{0}>{1}</{0}>\n".format(key.encode("utf-8"), data[key].encode("utf-8")))
 
     xml.append("</xml>")
     return "".join(xml)
+
+def exchange_src_des(data):
+    data['FromUserName'], data['ToUserName'] = data['ToUserName'], data['FromUserName']
